@@ -1,6 +1,6 @@
 ## makeCacheMatix creates a special 'matrix'. It contains 4 functions
-## 1- sets the value for the matrix, 2-get the value matrix, 3-set the inverse matrix, 
-## and 4-gets the inverse matrix
+## 1)sets the value for the matrix, 2)get the value matrix, 3)set the inverse matrix, 
+## and 4)gets the inverse matrix
 
 makeCacheMatrix <- function(m = matrix()) {
        
@@ -13,10 +13,12 @@ makeCacheMatrix <- function(m = matrix()) {
                 m <<- y 
                 inv <<- NULL     
         }            
+        
         ## getmatrix returns the matrix m stored in the main function. Doesn't require any input.
         getmatrix <- function() m   
-        ##setinverse and getinverse don't calculate the inverse matrix.
-        ##setinverse stores the value of the input into a matrix variable "inv" in the main function. 
+        
+        ##setinverse and getinverse functions don't calculate the inverse matrix.
+        ##setinverse funciton stores the value of the input into a matrix variable "inv" in the main function. 
         ##getinverse returs the inverse matrix. 
         setinverse <- function (inverse = matrix())    inv <<- inverse                                                                    
         getinverse <- function() inv
@@ -33,9 +35,10 @@ makeCacheMatrix <- function(m = matrix()) {
 cacheSolve <- function(x, ...) {
         ## get the inverse matrix and save it in "inv" matrix variable
         inv <- x$getinverse()
-        ##check if the inverse matrix already exists.
-        ##check if the "inv" is not equal to NULL. If not NULL (that means inverse already exists).
-        ##Then get the inverse from the cache
+        ##check if Cached Inverse matrix exists or it needs to be computed.
+        ##if the "inv" is not equal to NULL, that means the Cached Inverse exists and there has been
+        ##no change to the matrix.If "inv" is not NULL, then get the inverse from the cache and retrun it.
+        ##Otherwise,compute the Inverse matrix using solve funciton.
                 if (!is.null(inv)) {
                         message ("getting cached data")
                         return(inv) 
@@ -44,7 +47,7 @@ cacheSolve <- function(x, ...) {
         inmatrix <- x$getmatrix()
         ##Calculate the inverse matrix using solve function
         inv <- solve(inmatrix)
-        ##set the value of inverse
+        ##set/save the value of inverse matrix in "Inv"
         x$setinverse(inv)
         ## Return a matrix that is the inverse of input/original matrix
         inv
