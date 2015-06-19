@@ -1,53 +1,54 @@
-## makeCacheMatix creates a special 'matrix'. It contains 4 functions
-## 1)sets the value for the matrix, 2)get the value matrix, 3)set the inverse matrix, 
-## and 4)gets the inverse matrix
+## makeCacheMatix function contains 4 functions:
+## 1- it sets/chnages the value for a matrix, 2- it gets the value of the matrix, 
+## 3- it sets the value of the inverse matrix,4- it gets the value of inverse matrix
 
 makeCacheMatrix <- function(m = matrix()) {
        
         ## initilize the inverse matrix variable "inv" with NULL 
         inv <- matrix()
         inv <- NULL         
-        ## setmatrix function changes the matrix stored in the main function and reinitilizes "inv"
-        ##matrix with NULL.
+        ## setmatrix function sets/changes the value of matrix stored in the main function
+        ## it reinitilizes "inv" matrix (which will hold the inverse matrix) with NULL.
         setmatrix <- function (y) { 
                 m <<- y 
                 inv <<- NULL     
         }            
         
-        ## getmatrix returns the matrix m stored in the main function. Doesn't require any input.
+        ## getmatrix returns the matrix m stored in the main function. It doesn't require any input.
         getmatrix <- function() m   
         
-        ##setinverse and getinverse functions don't calculate the inverse matrix.
-        ##setinverse funciton stores the value of the input into a matrix variable "inv" in the main function. 
-        ##getinverse returs the inverse matrix. 
+        ## setinverse and getinverse functions don't calculate the inverse matrix.
+        ## setinverse funciton stores the value of the input into a matrix variable "inv" in the main function. 
+        ## getinverse returs the inverse matrix. 
         setinverse <- function (inverse = matrix())    inv <<- inverse                                                                    
         getinverse <- function() inv
         
-        ## Storing of 4 functions above in the function makeCacheMatrix
+        ## The funciton list store 4 functions above in the function makeCacheMatrix
         list( setmatrix = setmatrix, getmatrix = getmatrix,
               setinverse= setinverse, getinverse = getinverse)
 }
 
-##The cacheSolve function computes the inverse of the special "matrix" returned by makeCacheMatrix above. 
-##if inverse found, it will retrun the inverse matrix from cache. Otherwise, it will calculate the inverse
-##matrix and stores it in matrix "inv" and return it.
+## The cacheSolve function computes the inverse of the special "matrix" returned by makeCacheMatrix above. 
+## If inverse matrix found, it will retrun the inverse matrix from cache. 
+## Otherwise, it will calculate the inverse matrix and stores it in matrix "inv" and return it.
 
 cacheSolve <- function(x, ...) {
         ## get the inverse matrix and save it in "inv" matrix variable
         inv <- x$getinverse()
-        ##check if Cached Inverse matrix exists or it needs to be computed.
-        ##if the "inv" is not equal to NULL, that means the Cached Inverse exists and there has been
-        ##no change to the matrix.If "inv" is not NULL, then get the inverse from the cache and retrun it.
-        ##Otherwise,compute the Inverse matrix using solve funciton.
+        ## Check to see if cached Inverse matrix exists or the inverse needs to be computed.
+        ## If the "inv" is not equal to NULL, that means the cached inverse matrix exists and 
+        ## there has been no change to the matrix.Get the inverse matrix from the cache and retrun it.
+        ## Otherwise,compute the Inverse matrix using solve funciton.
                 if (!is.null(inv)) {
                         message ("getting cached data")
                         return(inv) 
                 }
-        ##get the input matrix and save it "inmatrix" variable
+        ## The lines below will be executed,only if cached inverse martix does not exist.
+        ## Get the input matrix and save it to "inmatrix" variable
         inmatrix <- x$getmatrix()
-        ##Calculate the inverse matrix using solve function
+        ## Calculate the inverse matrix using solve function
         inv <- solve(inmatrix)
-        ##set/save the value of inverse matrix in "Inv"
+        ## Set/save the value of inverse matrix in "Inv"
         x$setinverse(inv)
         ## Return a matrix that is the inverse of input/original matrix
         inv
